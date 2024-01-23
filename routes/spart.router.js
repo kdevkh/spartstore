@@ -28,9 +28,6 @@ router.post("/goods", async (req, res, next) => {
     const { name, thumbnailUrl, price, description, seller, password } =
       validation; // 전역변수로 빼보자
 
-    // // 기본 상태는 판매 중
-    // const status = "FOR_SALE";
-
     const product = new Spart({
       name,
       thumbnailUrl,
@@ -38,7 +35,6 @@ router.post("/goods", async (req, res, next) => {
       description,
       seller,
       password,
-      status,
     });
 
     const savedProduct = await product.save();
@@ -99,8 +95,10 @@ router.put("/goods/:productId", async (req, res, next) => {
       return res.status(401).json({ message: "비번 그게 아님" });
     }
 
-    // 업데이트 필드 적용
-    Object.assign(product, validation);
+    // 피드백 적용: for문 활용
+    for (const [key, value] of Object.entries(validation)) {
+      product[key] = value;
+    }
 
     const updatedProduct = await product.save();
 

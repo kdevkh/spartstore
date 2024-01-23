@@ -16,8 +16,9 @@ app.set("views", "./views");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ejs endeavor
+// ejs style and script
 app.use(express.static("./style"));
+app.use(express.static("./public"));
 
 app.use((req, res, next) => {
   console.log("Request URL:", req.originalUrl, "-", new Date());
@@ -26,7 +27,7 @@ app.use((req, res, next) => {
 
 const router = express.Router();
 
-// ejs endeavor
+// ejs 상품목록조회
 app.get("/", async (req, res) => {
   const products = await Spart.find()
     .select("name thumbnailUrl price seller status createdAt")
@@ -35,6 +36,8 @@ app.get("/", async (req, res) => {
 
   res.render("index", { post: products });
 });
+
+// ejs 상품등록은 modal.js에서 바로 해당 경로로 fetch할 수 있음
 
 app.use("/api", [router, spartRouter]);
 

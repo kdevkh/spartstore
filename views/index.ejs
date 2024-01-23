@@ -1,24 +1,67 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spart Store</title>
     <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
+    <script src="modal.js"></script>
+</head>
+<body>
     <h1>Spart Store</h1>
-  
-    <div class="product-grid">
-      <% post.forEach(product => { %>
-        <div class="product">
-          <img src="<%= product.thumbnailUrl %>" alt="<%= product.name %>">
-          <h3><%= product.name %></h3>
-          <p><%= product.price %> 원</p>
-          <p><%= product.seller %></p>
-          <p><%= product.status %></p>
+    <!-- 상품 등록 버튼 -->
+    <button id="createProductBtn">상품 등록</button>
+
+    <!-- 상품 등록 모달 -->
+    <div id="createProductModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeBtn">&times;</span>
+            <h2>상품 등록</h2>
+            <form id="createProductForm">
+                <label for="productName">상품명:</label>
+                <input type="text" id="productName" name="name" required>
+
+                <label for="productThumbnailUrl">썸넬 URL:</label>
+                <input type="text" id="productThumbnailUrl" name="thumbnailUrl" required>
+
+                <label for="productPrice">가격 (원):</label>
+                <input type="number" id="productPrice" name="price" required>
+
+                <label for="productDescription">상세정보:</label>
+                <textarea id="productDescription" name="description" rows="4" required></textarea>
+
+                <label for="productSeller">판매자:</label>
+                <input type="text" id="productSeller" name="seller" required>
+
+                <label for="productPassword">비밀번호:</label>
+                <input type="password" id="productPassword" name="password" required>
+
+                <button type="button" id="saveChangesBtn">저장하기</button>
+            </form>
         </div>
-      <% }); %>
     </div>
-  </body>
+    
+    
+    <!-- 상품 목록 상세 조회 모달 -->
+    <div class="product-grid">
+        <% post.forEach(product => { %>
+            <div class="product" data-product-id="<%= product._id %>">
+                <img src="<%= product.thumbnailUrl %>" alt="<%= product.name %>">
+                <h3><%= product.name %></h3>
+                <p><%= product.price %> 원</p>
+                <p><%= product.seller %></p>
+                <p><%= product.status %></p>
+            </div>
+        <% }); %>
+    </div>
+
+
+    <!-- 상세 조회 내역 -->
+    <div id="productDetailModal" class="modal">
+      <div class="modal-content">
+         <span class="close" id="closeDetailModalBtn">&times;</span>
+         <div id="productDetailContent"></div>
+      </div>
+   </div>
+</body>
 </html>
