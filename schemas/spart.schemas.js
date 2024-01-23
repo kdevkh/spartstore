@@ -27,6 +27,7 @@ const SpartSchema = new mongoose.Schema({
   },
   status: {
     type: String, // status 필드 추가
+    enum: ["FOR_SALE", "SOLD_OUT"],
     default: "FOR_SALE", // 기본 값은 "FOR_SALE"
   },
   createdAt: {

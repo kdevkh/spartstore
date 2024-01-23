@@ -28,8 +28,8 @@ router.post("/goods", async (req, res, next) => {
     const { name, thumbnailUrl, price, description, seller, password } =
       validation; // 전역변수로 빼보자
 
-    // 기본 상태는 판매 중
-    const status = "FOR_SALE";
+    // // 기본 상태는 판매 중
+    // const status = "FOR_SALE";
 
     const product = new Spart({
       name,
@@ -56,7 +56,7 @@ router.get("/goods", async (req, res, next) => {
   try {
     const products = await Spart.find()
       .select("name thumbnailUrl price seller status createdAt")
-      .sort("-createdAt")
+      .sort("-createdAt") //내림차순
       .exec();
 
     return res.status(200).json({ products });
@@ -69,10 +69,10 @@ router.get("/goods", async (req, res, next) => {
 router.get("/goods/:productId", async (req, res, next) => {
   try {
     const { productId } = req.params;
-    const product = await Spart.findById(productId).select("-password").exec();
+    const product = await Spart.findById(productId).select("-password").exec(); // 비번 배제
 
     if (!product) {
-      return res.status(404).json({ message: "상품 없음...!!!" });
+      return res.status(404).json({ message: "상품 조회 실패했음@@@@@!!!!!" });
     }
 
     return res.status(200).json({ product });
