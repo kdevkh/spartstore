@@ -81,6 +81,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <p>판매자: ${product.seller}</p>
                     <p>가격: ${product.price} 원</p>
                     <p>설명: ${product.description}</p>
+                    <p>${product.status}</p>
+                    <p>${product.createdAt}</p>
                  `;
 
           productDetailModal.style.display = "block";
